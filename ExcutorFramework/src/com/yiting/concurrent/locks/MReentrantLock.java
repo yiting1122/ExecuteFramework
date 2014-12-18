@@ -171,6 +171,7 @@ public class MReentrantLock implements MLock, Serializable {
 
 	@Override
 	public void unLock() {
+		System.out.println("ÊÍ·ÅËø");
 		sync.release(1);
 
 	}

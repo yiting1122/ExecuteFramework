@@ -21,15 +21,23 @@ public class MCyclicBarrier {
 
 	private int count;
 
+	/**
+	 * 触发等待线程，并设置一下代
+	 */
 	private void nextGeneration() {
+		System.out.println("next generation trip signal all");
 		trip.signalAll();
 		count = parties;
 		generation = new Generation();
 	}
 
+	/**
+	 * 产生异常 需要打开barrier
+	 */
 	private void breakBarrier() {
 		generation.broken = true;
 		count = parties;
+		System.out.println("break barrier trip signal all");
 		trip.signalAll();
 	}
 
@@ -55,11 +63,11 @@ public class MCyclicBarrier {
 						command.run();
 					}
 					ranAction = true;
-					nextGeneration();
+					nextGeneration();   //触发等待线程  在trip的condition队列上的线程
 					return 0;
 				} finally {
 					if (!ranAction) {
-						breakBarrier();
+						breakBarrier();  
 					}
 				}
 			}
@@ -67,7 +75,9 @@ public class MCyclicBarrier {
 			for (;;) {
 				try {
 					if (!timed) {
+						System.out.println("trip await");
 						trip.await();
+						System.out.println("trip await out");
 					} else if (nanos > 0L) {
 						nanos = trip.awaitNanos(nanos);
 					}
@@ -84,6 +94,7 @@ public class MCyclicBarrier {
 					throw new BrokenBarrierException();
 				}
 				if (g != generation) {
+					System.out.println("index :"+index);
 					return index;
 				}
 				if (timed && nanos <= 0L) {
@@ -93,7 +104,8 @@ public class MCyclicBarrier {
 			}
 
 		} finally {
-			lock.lock();
+			System.out.println("unlock");
+			lock.unLock();
 		}
 	}
 

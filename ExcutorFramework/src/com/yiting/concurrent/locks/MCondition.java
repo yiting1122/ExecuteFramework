@@ -2,6 +2,9 @@ package com.yiting.concurrent.locks;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
+
+import com.yiting.concurrent.locks.MAbstractQueuedSynchronizer.Node;
 
 public interface MCondition {
 
@@ -14,8 +17,8 @@ public interface MCondition {
 	/**
 	 * Causes the current thread to wait until it is signalled.
 	 */
-	public void awaitUninterruptly();
-
+	public void awaitUninterruptibly();
+	 
 	/**
 	 * Causes the current thread to wait until it is signalled or interrupted,
 	 * or the specified waiting time elapses.

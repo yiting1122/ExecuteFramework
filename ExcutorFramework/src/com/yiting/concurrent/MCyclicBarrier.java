@@ -25,7 +25,7 @@ public class MCyclicBarrier {
 	 * 触发等待线程，并设置一下代
 	 */
 	private void nextGeneration() {
-		System.out.println("next generation trip signal all");
+		System.out.println(Thread.currentThread() +"next generation trip signal all");
 		trip.signalAll();
 		count = parties;
 		generation = new Generation();
@@ -75,9 +75,9 @@ public class MCyclicBarrier {
 			for (;;) {
 				try {
 					if (!timed) {
-						System.out.println("trip await");
+						System.out.println(Thread.currentThread()+"trip await");
 						trip.await();
-						System.out.println("trip await out");
+						System.out.println(Thread.currentThread()+"trip await out");
 					} else if (nanos > 0L) {
 						nanos = trip.awaitNanos(nanos);
 					}

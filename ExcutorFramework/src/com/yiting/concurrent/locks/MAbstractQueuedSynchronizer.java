@@ -2231,8 +2231,7 @@ public abstract class MAbstractQueuedSynchronizer
             }
             return list;
         }
-
-		
+	
 		
     }
 

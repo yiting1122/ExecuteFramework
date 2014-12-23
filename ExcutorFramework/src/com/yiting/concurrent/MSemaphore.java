@@ -5,10 +5,12 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import com.yiting.concurrent.locks.MAbstractQueuedSynchronizer;
+
 /**
  * 信号量，控制当前访问线程的个数
+ * 
  * @author yiting
- *
+ * 
  */
 
 public class MSemaphore implements Serializable {
@@ -30,22 +32,19 @@ public class MSemaphore implements Serializable {
 			for (;;) {
 				int available = getState();
 				int remaining = available - acquires;
-				if (remaining < 0 || compareAndSetState(available, remaining)) {
+				if (remaining < 0 || compareAndSetState(available, remaining))
 					return remaining;
-				}
 			}
 		}
 
-		protected final boolean tryReleaseShared(int release) {
+		protected final boolean tryReleaseShared(int releases) {
 			for (;;) {
 				int current = getState();
-				int next = current + release;
-				if (next < current) {
+				int next = current + releases;
+				if (next < current) // overflow
 					throw new Error("Maximum permit count exceeded");
-				}
-				if (compareAndSetState(current, next)) {
+				if (compareAndSetState(current, next))
 					return true;
-				}
 			}
 		}
 
@@ -53,60 +52,58 @@ public class MSemaphore implements Serializable {
 			for (;;) {
 				int current = getState();
 				int next = current - reductions;
-				if (next > current) {
-					throw new Error("permit count underflow");
-				}
-				if (compareAndSetState(current, next)) {
+				if (next > current) // underflow
+					throw new Error("Permit count underflow");
+				if (compareAndSetState(current, next))
 					return;
-				}
 			}
 		}
 
 		final int drainPermits() {
 			for (;;) {
 				int current = getState();
-				if (current == 0 || compareAndSetState(current, 0)) {
+				if (current == 0 || compareAndSetState(current, 0))
 					return current;
-				}
 			}
 		}
 
 	}
 
+	/**
+	 * NonFair version
+	 */
 	static final class NonfairSync extends Sync {
-		private static final long serialVersionUID = -5520691716509843296L;
+		private static final long serialVersionUID = -2694183684443567898L;
 
 		NonfairSync(int permits) {
 			super(permits);
 		}
 
-		@Override
 		protected int tryAcquireShared(int acquires) {
 			return nonfairTryAcquireShared(acquires);
 		}
 	}
 
+	/**
+	 * Fair version
+	 */
 	static final class FairSync extends Sync {
-		private static final long serialVersionUID = 7185227045079901224L;
+		private static final long serialVersionUID = 2014338818796000944L;
 
 		FairSync(int permits) {
 			super(permits);
 		}
 
-		@Override
 		protected int tryAcquireShared(int acquires) {
 			for (;;) {
-				if (hasQueuedPredecessors()) {
+				if (hasQueuedPredecessors())
 					return -1;
-				}
 				int available = getState();
 				int remaining = available - acquires;
-				if (remaining < 0 || compareAndSetState(available, remaining)) {
-					return remaining; // 返回值大于0 就是成功
-				}
+				if (remaining < 0 || compareAndSetState(available, remaining))
+					return remaining;
 			}
 		}
-
 	}
 
 	public MSemaphore(int permits) {
@@ -117,8 +114,10 @@ public class MSemaphore implements Serializable {
 		sync = fair ? new FairSync(permits) : new NonfairSync(permits);
 	}
 
+	
+	
 	public void acquire() throws InterruptedException {
-		sync.acquireInterruptibly(1);
+		sync.acquireSharedInterruptibly(1);
 	}
 
 	public void acquireUninterruptibly() {
@@ -202,6 +201,5 @@ public class MSemaphore implements Serializable {
 	public String toString() {
 		return super.toString() + "[Permits = " + sync.getPermits() + "]";
 	}
-	
 
 }

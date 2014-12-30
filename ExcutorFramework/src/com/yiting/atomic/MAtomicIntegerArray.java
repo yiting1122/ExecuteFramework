@@ -1,23 +1,39 @@
 package com.yiting.atomic;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+
 import sun.misc.Unsafe;
 
 public class MAtomicIntegerArray implements Serializable {
 	private static final long serialVersionUID = -2577153656613777889L;
 
-	private static final Unsafe unsafe = Unsafe.getUnsafe();
-	private static final int base = unsafe.arrayBaseOffset(int[].class);
+	private static final Unsafe unsafe;
+	private static final int base ;
 	private static final int shift;
 	private final int[] array;
 	static {
-		//获取数组中一个元素的大小(get size of an element in the array)
+		try{
+		unsafe=getUnsafe();
+		base= unsafe.arrayBaseOffset(int[].class);
+		// 获取数组中一个元素的大小(get size of an element in the array)
 		int scale = unsafe.arrayIndexScale(int[].class);
 		if ((scale & (scale - 1)) != 0) {
 			throw new Error("data type scale not a power of two");
 		}
 		// floor(log2(x)) = 31 - numberOfLeadingZeros(x)
 		shift = 31 - Integer.numberOfLeadingZeros(scale);
+		}catch (Exception e) {
+			throw new Error(e);
+		}
+	}
+
+	public static final Unsafe getUnsafe() throws NoSuchFieldException,
+			SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field field = Unsafe.class.getField("theUnsafe");
+		field.setAccessible(true);
+		return (Unsafe) field.get(null);
+
 	}
 
 	private long checkedByteOffset(int i) {

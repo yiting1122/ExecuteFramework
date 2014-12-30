@@ -1,15 +1,18 @@
 package com.yiting.atomic;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+
 import sun.misc.Unsafe;
 
 public class MAtomicInteger extends Number implements Serializable {
 	private static final long serialVersionUID = -8092305366777404513L;
 
-	private static final Unsafe unsafe = Unsafe.getUnsafe();
+	private static final Unsafe unsafe ;
 	private static final long valueOffset;
 	static {
 		try {
+			unsafe=getUnsafe();
 			valueOffset = unsafe.objectFieldOffset(MAtomicInteger.class
 					.getDeclaredField("value"));
 		} catch (Exception e) {
@@ -17,6 +20,14 @@ public class MAtomicInteger extends Number implements Serializable {
 		}
 	}
 	private volatile int value;
+
+	public static final Unsafe getUnsafe() throws NoSuchFieldException,
+			SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field field = Unsafe.class.getField("theUnsafe");
+		field.setAccessible(true);
+		return (Unsafe) field.get(null);
+
+	}
 
 	private MAtomicInteger(int initValue) {
 		this.value = initValue;

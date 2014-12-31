@@ -7,7 +7,7 @@
  */
 package com.yiting.collection;
 
-public interface Collection<E> extends Iterable<E> {
+public interface MCollection<E> extends Iterable<E> {
 	
 	
 	/**
@@ -106,7 +106,7 @@ public interface Collection<E> extends Iterable<E> {
 	 * @return 如果是子集关系返回为true
 	 */
 	
-	public boolean containsAll(Collection<?> c);
+	public boolean containsAll(MCollection<?> c);
 	
 	
 	/**
@@ -115,14 +115,14 @@ public interface Collection<E> extends Iterable<E> {
 	 * @return
 	 */
 	
-	public boolean addAll(Collection<? extends E> c);
+	public boolean addAll(MCollection<? extends E> c);
 	
 	/**
 	 * 删除当前集合与C集合的交集，即删除两者中相同的元素，
 	 * @param c c集合中元素的类型是动态决定的，
 	 * @return
 	 */
-	public boolean removeAll(Collection<?> c);
+	public boolean removeAll(MCollection<?> c);
 	
 	
 	/**
@@ -130,7 +130,7 @@ public interface Collection<E> extends Iterable<E> {
 	 * @param c
 	 * @return
 	 */
-	public boolean retainAll(Collection<?> c);
+	public boolean retainAll(MCollection<?> c);
 	
 	
 	

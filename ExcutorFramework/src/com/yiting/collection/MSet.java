@@ -9,7 +9,7 @@ package com.yiting.collection;
  *
  * @param <E> 由这个集合组成的元素类型
  */
-public interface Set<E> extends Collection<E>{
+public interface MSet<E> extends MCollection<E>{
 	//查询操作
 	/**
 	 * 返回 集合中元素的个数
@@ -79,14 +79,14 @@ public interface Set<E> extends Collection<E>{
 		 * @param c c集合中元素的类型是？ ？代表集合元素的类型是动态决定的
 		 * @return 如果是子集关系返回为true
 		 */
-	 boolean containsAll(Collection<?> c);
+	 boolean containsAll(MCollection<?> c);
 		
 
-	 boolean addAll(Collection<? extends E> c);
+	 boolean addAll(MCollection<? extends E> c);
 	 
-	 boolean retainAll(Collection<?> c);
+	 boolean retainAll(MCollection<?> c);
 	 
-	 boolean removeAll(Collection<?> c);
+	 boolean removeAll(MCollection<?> c);
 	 
 	 void clear();
 	 

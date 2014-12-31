@@ -5,7 +5,7 @@
  **/
 package com.yiting.collection;
 
-public interface Queue<E> extends Collection<E> {
+public interface MQueue<E> extends MCollection<E> {
 	/**
 	 * 在不超过队列容量的前提下向队列中插入一个特定的元素
 	 * 如果插入成功则返回true,否则，抛出异常。

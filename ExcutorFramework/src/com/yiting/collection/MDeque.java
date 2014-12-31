@@ -9,7 +9,7 @@ package com.yiting.collection;
  * 双队列、双端队列
  * @param e
  */
-public interface Deque<E> extends Queue<E> {
+public interface MDeque<E> extends MQueue<E> {
 
 	/**
 	 

@@ -6,6 +6,6 @@ package com.yiting.collection;
  * 该接口表明集合能够通过参数i 进行随机访问 如 list.get(i),这样的随机访问比iterator.next更见快速
  */
 
-public interface RandomAccess {
+public interface MRandomAccess {
 
 }

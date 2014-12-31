@@ -6,12 +6,12 @@ import java.util.*;
  * 这个类提供了一些主要的实现
  * 通常增加的方法也会被重载
  */
-public class AbstractQueue<E> extends AbstractCollection<E> implements Queue<E>{
+public class MAbstractQueue<E> extends MAbstractCollection<E> implements MQueue<E>{
 
 	/**
 	 * 使用子类构造函数
 	 */
-	protected AbstractQueue(){	
+	protected MAbstractQueue(){	
 	}
 	
 	
@@ -69,7 +69,7 @@ public class AbstractQueue<E> extends AbstractCollection<E> implements Queue<E>{
 	 * 此外，该操作的行为是未定义的操作时，如果指定的集合被修改，同时操作也在进行
 	 * 这个实现遍历指定的集合，并将迭代器返回的每一个元素添加到此队列。
 	 */
-	public boolean addAll(Collection <? extends E> c){
+	public boolean addAll(MCollection <? extends E> c){
 		if(c == null)
 			throw new NullPointerException();
 		if(c == this)

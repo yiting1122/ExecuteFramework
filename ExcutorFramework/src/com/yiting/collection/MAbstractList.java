@@ -31,9 +31,9 @@ import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
-public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
+public abstract class MAbstractList<E> extends MAbstractCollection<E> implements MList<E> {
 	
-	protected AbstractList(){
+	protected MAbstractList(){
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	 * @param c
 	 * @return
 	 */
-	public boolean addAll(int index,Collection<? extends E> c){
+	public boolean addAll(int index,MCollection<? extends E> c){
 		rangeCheckForAdd(index);
 		boolean modified=false;
 		for(E e:c){
@@ -222,7 +222,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 			}
 			checkForComodification();
 			try {
-				AbstractList.this.remove(lastRet);
+				MAbstractList.this.remove(lastRet);
 				if(lastRet<cursor){   //如果遍历指针和lastRet不相等，那么删除一个元素之后cursor必须减1，这样位置才能正确
 					cursor--;          
 				}
@@ -294,7 +294,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 			}
 			checkForComodification();  //判断是否有产生结构变化非同步操作
 			try {
-				AbstractList.this.set(cursor, e);   //修改对同步没有影响，不产生结构变化
+				MAbstractList.this.set(cursor, e);   //修改对同步没有影响，不产生结构变化
 				expectedModCount=modCount;
 			} catch (IndexOutOfBoundsException exception) {
 				throw new ConcurrentModificationException();
@@ -310,7 +310,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 		public void add(E e) {
 			checkForComodification();
 			try {
-				AbstractList.this.add(cursor,e);
+				MAbstractList.this.add(cursor,e);
 				cursor++;
 				lastRet=-1;
 				expectedModCount=modCount; 
@@ -355,7 +355,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	 * 其实最终都是调用的return  new SubList<E>(this, fromIndex, toIndex)
 	 * 只不过有的list实现了随机存取，则可以用RandomAccessSubList<E>
 	 */
-	public  List<E> subList (int fromIndex,int toIndex){
+	public  MList<E> subList (int fromIndex,int toIndex){
 		return (this instanceof RandomAccess?new RandomAccessSubList<E>(this, fromIndex, toIndex):
 			new SubList<E>(this, fromIndex, toIndex));
 		
@@ -366,11 +366,11 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 		if(o==this){
 			return true;
 		}
-		if(!(o instanceof List)){
+		if(!(o instanceof MList)){
 			return false;
 		}
 		ListIterator<E> e1=listIterator();
-		ListIterator e2=((List)o).listIterator();
+		ListIterator e2=((MList)o).listIterator();
 		while(e1.hasNext()&&e2.hasNext()){
 			E o1=e1.next();
 			Object o2=e2.next();
@@ -405,11 +405,11 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
  * @param <E>
  */
 
-class SubList<E> extends AbstractList<E>{
-	private final AbstractList<E> l;
+class SubList<E> extends MAbstractList<E>{
+	private final MAbstractList<E> l;
 	private final int offset;
 	private int size;
-	public SubList(AbstractList<E> list,int fromIndex,int toIndex){
+	public SubList(MAbstractList<E> list,int fromIndex,int toIndex){
 		if(fromIndex<0||fromIndex>list.size()){
 			throw  new IndexOutOfBoundsException("fromIndex <0 or fromIndex>list.size()");
 		}
@@ -434,7 +434,7 @@ class SubList<E> extends AbstractList<E>{
 		
 	}
 	@Override
-	public List<E> subList(int fromIndex, int toIndex) {
+	public MList<E> subList(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		return new SubList<E>(this, fromIndex, toIndex);
 	}
@@ -466,7 +466,7 @@ class SubList<E> extends AbstractList<E>{
 		return result;
 	}
 	@Override
-	public boolean addAll(int index, Collection<? extends E> c) {
+	public boolean addAll(int index, MCollection<? extends E> c) {
 		// TODO Auto-generated method stub
 		rangeCheck(index);
 		//jdk 直接采用的c.size()但是如果c为null的时候是否会报异常呢？ 感觉如果c==null；是不能用c.size（）的，后面可以测试
@@ -598,7 +598,7 @@ class SubList<E> extends AbstractList<E>{
 
 class RandomAccessSubList<E> extends SubList<E> implements RandomAccess{
 
-	public RandomAccessSubList(AbstractList<E> list, int fromIndex,
+	public RandomAccessSubList(MAbstractList<E> list, int fromIndex,
 			int toIndex) {
 		super(list, fromIndex, toIndex);
 		// TODO Auto-generated constructor stub

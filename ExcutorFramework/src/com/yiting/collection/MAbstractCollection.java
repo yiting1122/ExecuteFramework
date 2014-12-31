@@ -14,12 +14,12 @@ package com.yiting.collection;
 
 import java.util.Arrays;
 
-public abstract class AbstractCollection<E> implements Collection<E> {
+public abstract class MAbstractCollection<E> implements MCollection<E> {
 
 	/**
 	 * 该抽象类的构造函数定义为protected，可以限制只有其子类的构造函数才能调用该方法。
 	 */
-	protected AbstractCollection() {
+	protected MAbstractCollection() {
 	}
 
 	public abstract int size();
@@ -177,7 +177,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
 		for(Object e:c){
 			if(!contains(e)){
@@ -188,7 +188,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends E> c) {
+	public boolean addAll(MCollection<? extends E> c) {
 		// TODO Auto-generated method stub
 		boolean modified=false;
 		for(E e:c){
@@ -200,7 +200,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
 		Iterator<E> it=iterator();
 		boolean modified=false;
@@ -218,7 +218,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
 	/**
 	 * 保留当前集合中与C相同的元素
 	 */
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
 		Iterator<E> it=iterator();
 		boolean modified=false;

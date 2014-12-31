@@ -7,7 +7,7 @@
  */
 package com.yiting.collection;
 
-public interface List<E> extends Collection<E> {
+public interface MList<E> extends MCollection<E> {
 
 	public int size();
 
@@ -25,13 +25,13 @@ public interface List<E> extends Collection<E> {
 
 	public boolean remove(E e);
 
-	public boolean containsAll(Collection<?> c);
+	public boolean containsAll(MCollection<?> c);
 
-	public boolean addAll(Collection<? extends E> c);
+	public boolean addAll(MCollection<? extends E> c);
 
-	public boolean removeAll(Collection<?> c);
+	public boolean removeAll(MCollection<?> c);
 
-	public boolean retainAll(Collection<?> c);
+	public boolean retainAll(MCollection<?> c);
 
 	public void clear();
 
@@ -138,7 +138,7 @@ public interface List<E> extends Collection<E> {
 	 *             }
 	 */
 	
-	public List<E> subList(int fromIndex, int toIndex);
+	public MList<E> subList(int fromIndex, int toIndex);
 	
 	/**
 	 * 返回一个ListIterator遍历子，通过该遍历子进行遍历，ListIterator继承与Itarotor，其比Iterator

@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
-public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
-		List<E>, Cloneable, Serializable {
+public class MArrayList<E> extends MAbstractList<E> implements MRandomAccess,
+		MList<E>, Cloneable, Serializable {
 
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	private Object[] elementData;
 	private int size;
 
-	public ArrayList() {
+	public MArrayList() {
 		this(10);
 
 	}
@@ -31,7 +31,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		return elementData.length;
 	}
 
-	public ArrayList(int initCapacity) {
+	public MArrayList(int initCapacity) {
 		super();
 		if (initCapacity < 0) {
 			throw new IllegalArgumentException("initCapacity < 0");
@@ -39,7 +39,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		this.elementData = new Object[initCapacity];
 	}
 
-	public ArrayList(Collection<E> c) {
+	public MArrayList(MCollection<E> c) {
 		if (c == null) {
 			throw new NullPointerException("Collection C is null");
 		}
@@ -151,7 +151,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		// TODO Auto-generated method stub
 		try {
 			@SuppressWarnings("unchecked")
-			ArrayList<E> v = (ArrayList<E>) super.clone();
+			MArrayList<E> v = (MArrayList<E>) super.clone();
 			v.elementData = Arrays.copyOf(elementData, size);
 			v.modCount = 0;
 			return v;
@@ -275,7 +275,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends E> c) {
+	public boolean addAll(MCollection<? extends E> c) {
 		Object[] newValue = c.toArray();
 		int numNew = newValue.length;
 		ensureCapacity(size + numNew);
@@ -285,7 +285,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends E> c) {
+	public boolean addAll(int index, MCollection<? extends E> c) {
 		rangeCheckForAdd(index);
 		Object[] newValue = c.toArray();
 		int numNew = newValue.length;
@@ -319,13 +319,13 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
 		return batchRemove(c, false);
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
 		return batchRemove(c, true);
 	}
@@ -338,7 +338,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	 * @return
 	 */
 
-	private boolean batchRemove(Collection<?> c, boolean complement) {
+	private boolean batchRemove(MCollection<?> c, boolean complement) {
 		final Object[] elementData = this.elementData;
 		int r = 0, w = 0;
 		boolean modified = false;
@@ -447,7 +447,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 			if (i >= size) {
 				throw new NoSuchElementException();
 			}
-			Object[] elementData = ArrayList.this.elementData;
+			Object[] elementData = MArrayList.this.elementData;
 			if (i >= elementData.length) {
 				throw new ConcurrentModificationException();
 			}
@@ -462,7 +462,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 			}
 			checkForComodification();
 			try {
-				ArrayList.this.remove(lastRet);
+				MArrayList.this.remove(lastRet);
 				cursor = lastRet;
 				lastRet = -1;
 			} catch (IndexOutOfBoundsException ex) {
@@ -503,7 +503,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 			int i = cursor - 1;
 			if (i < 0)
 				throw new NoSuchElementException();
-			Object[] elementData = ArrayList.this.elementData;
+			Object[] elementData = MArrayList.this.elementData;
 			if (i >= elementData.length)
 				throw new ConcurrentModificationException();
 			cursor = i;
@@ -522,7 +522,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 			checkForComodification();
 
 			try {
-				ArrayList.this.set(lastRet, e);
+				MArrayList.this.set(lastRet, e);
 			} catch (IndexOutOfBoundsException ex) {
 				throw new ConcurrentModificationException();
 			}
@@ -534,7 +534,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 
 			try {
 				int i = cursor;
-				ArrayList.this.add(i, e);
+				MArrayList.this.add(i, e);
 				cursor = i + 1;
 				lastRet = -1;
 				expectedModCount = modCount;
@@ -546,7 +546,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	}
 
 	@Override
-	public List<E> subList(int fromIndex, int toIndex) {
+	public MList<E> subList(int fromIndex, int toIndex) {
 		subListRangeCheck(fromIndex, toIndex, size);
 		return new SubList(this, 0, fromIndex, toIndex);
 	}
@@ -561,20 +561,20 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 					+ ") > toIndex(" + toIndex + ")");
 	}
 
-	private class SubList extends AbstractList<E> implements RandomAccess {
+	private class SubList extends MAbstractList<E> implements MRandomAccess {
 
-		private final AbstractList<E> parent;
+		private final MAbstractList<E> parent;
 		private final int parentoffset;
 		private final int offset;
 		int size;
 
-		public SubList(AbstractList<E> parent, int offset, int fromIndex,
+		public SubList(MAbstractList<E> parent, int offset, int fromIndex,
 				int toIndex) {
 			this.parent = parent;
 			this.parentoffset = fromIndex;
 			this.offset = offset + fromIndex;
 			this.size = toIndex - fromIndex;
-			this.modCount = ArrayList.this.modCount;
+			this.modCount = MArrayList.this.modCount;
 		}
 
 		@Override
@@ -588,7 +588,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		public E get(int index) {
 			rangeCheck(index);
 			checkForComodification();
-			return ArrayList.this.elementData(offset + index);
+			return MArrayList.this.elementData(offset + index);
 		}
 
 		@Override
@@ -601,8 +601,8 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		public E set(int index, E element) {
 			rangeCheck(index);
 			checkForComodification();
-			E oldValue = ArrayList.this.elementData(offset + index);
-			ArrayList.this.elementData[index + offset] = element;
+			E oldValue = MArrayList.this.elementData(offset + index);
+			MArrayList.this.elementData[index + offset] = element;
 			return oldValue;
 		}
 
@@ -630,12 +630,12 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		 * @return
 		 */
 		@Override
-		public boolean addAll(Collection<? extends E> c) {
+		public boolean addAll(MCollection<? extends E> c) {
 			return addAll(this.size(), c);
 		}
 
 		@Override
-		public boolean addAll(int index, Collection<? extends E> c) {
+		public boolean addAll(int index, MCollection<? extends E> c) {
 			rangeCheck(index);
 			int cSize = c.size();
 			if (cSize == 0) {
@@ -650,7 +650,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 		}
 
 		@Override
-		public List<E> subList(int fromIndex, int toIndex) {
+		public MList<E> subList(int fromIndex, int toIndex) {
 			subListRangeCheck(fromIndex, toIndex, size);
 			return new SubList(this, offset, fromIndex, toIndex);
 		}
@@ -674,7 +674,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 			return new ListIterator<E>() {
 				int cursor = index;
 				int lastRet = -1;
-				int expectedModCount = ArrayList.this.modCount;
+				int expectedModCount = MArrayList.this.modCount;
 
 				public boolean hasNext() {
 					return cursor != SubList.this.size;
@@ -686,7 +686,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 					int i = cursor;
 					if (i >= SubList.this.size)
 						throw new NoSuchElementException();
-					Object[] elementData = ArrayList.this.elementData;
+					Object[] elementData = MArrayList.this.elementData;
 					if (offset + i >= elementData.length)
 						throw new ConcurrentModificationException();
 					cursor = i + 1;
@@ -703,7 +703,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 					int i = cursor - 1;
 					if (i < 0)
 						throw new NoSuchElementException();
-					Object[] elementData = ArrayList.this.elementData;
+					Object[] elementData = MArrayList.this.elementData;
 					if (offset + i >= elementData.length)
 						throw new ConcurrentModificationException();
 					cursor = i;
@@ -727,7 +727,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 						SubList.this.remove(lastRet);
 						cursor = lastRet;
 						lastRet = -1;
-						expectedModCount = ArrayList.this.modCount;
+						expectedModCount = MArrayList.this.modCount;
 					} catch (IndexOutOfBoundsException ex) {
 						throw new ConcurrentModificationException();
 					}
@@ -739,7 +739,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 					checkForComodification();
 
 					try {
-						ArrayList.this.set(offset + lastRet, e);
+						MArrayList.this.set(offset + lastRet, e);
 					} catch (IndexOutOfBoundsException ex) {
 						throw new ConcurrentModificationException();
 					}
@@ -753,14 +753,14 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 						SubList.this.add(i, e);
 						cursor = i + 1;
 						lastRet = -1;
-						expectedModCount = ArrayList.this.modCount;
+						expectedModCount = MArrayList.this.modCount;
 					} catch (IndexOutOfBoundsException ex) {
 						throw new ConcurrentModificationException();
 					}
 				}
 
 				final void checkForComodification() {
-					if (expectedModCount != ArrayList.this.modCount)
+					if (expectedModCount != MArrayList.this.modCount)
 						throw new ConcurrentModificationException();
 				}
 			};
@@ -769,7 +769,7 @@ public class ArrayList<E> extends AbstractList<E> implements RandomAccess,
 	}
 
 	private void checkForComodification() {
-		if (ArrayList.this.modCount != this.modCount)
+		if (MArrayList.this.modCount != this.modCount)
 			throw new ConcurrentModificationException();
 	}
 

@@ -15,7 +15,7 @@ public interface MList<E> extends MCollection<E> {
 
 	public boolean contains(Object o);
 
-	public Iterator<E> iterator();
+	public MIterator<E> iterator();
 
 	public Object[] toArray();
 
@@ -145,14 +145,14 @@ public interface MList<E> extends MCollection<E> {
 	 * 增加了更多的方法，即可以实现正向反向遍历 同时可以进行更新增加等功能
 	 * @return
 	 */
-	public ListIterator<E> listIterator();
+	public MListIterator<E> listIterator();
 	
 	/**
 	 * 返回一个从指定位置开始的ListIterator遍历子
 	 * @param index  遍历子的初始位置
 	 * @return
 	 */
-	public ListIterator<E> listIterator(int index);
+	public MListIterator<E> listIterator(int index);
 	
 	
 

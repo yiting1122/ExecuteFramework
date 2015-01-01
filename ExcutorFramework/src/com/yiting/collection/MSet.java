@@ -38,7 +38,7 @@ public interface MSet<E> extends MCollection<E>{
 	     * does not return the elements in any particular order.
 	     * Iterator 是一个遍历对象，通过这个遍历对象可以对collection 对象进行遍历
 		 */
-	Iterator<E> iterator();
+	MIterator<E> iterator();
 	
 
 	 /**

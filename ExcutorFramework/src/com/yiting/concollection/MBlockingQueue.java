@@ -43,7 +43,7 @@ public interface MBlockingQueue<E> extends MQueue<E> {
 	 *             if some property of the specified element prevents it from
 	 *             being added to this queue
 	 */
-	public boolean offer(E e, long timeout, TimeUnit unit);
+	public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
 
 	/**
 	 * Retrieves and removes the head of this queue, waiting if necessary until

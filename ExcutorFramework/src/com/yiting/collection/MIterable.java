@@ -15,11 +15,11 @@ import javax.tools.JavaCompiler;
  *
  * @param <T> 遍历集合中元素的类型
  */
-public interface Iterable<T> extends java.lang.Iterable<T> {
+public interface MIterable<T> extends java.lang.Iterable<T> {
 	
 	/**
 	 * 通过该方法获取一个遍历Iterator的遍历子对象，通过该遍历子对集合进行遍历
 	 * @return  iteraor对象
 	 */
-	Iterator<T> iterator();
+	MIterator<T> iterator();
 }

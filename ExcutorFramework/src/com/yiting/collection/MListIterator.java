@@ -7,7 +7,7 @@
  */
 package com.yiting.collection;
 
-public interface ListIterator<E> extends Iterator<E> {
+public interface MListIterator<E> extends MIterator<E> {
 	
 	
 

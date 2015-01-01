@@ -24,7 +24,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 
 	public abstract int size();
 
-	public abstract Iterator<E> iterator();
+	public abstract MIterator<E> iterator();
 
 	@Override
 	public boolean isEmpty() {
@@ -41,7 +41,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	 */
 	public boolean contains(Object o) {
 		// TODO Auto-generated method stub
-		Iterator<E> it = iterator();
+		MIterator<E> it = iterator();
 
 		if (o == null) {
 			while (it.hasNext()) {
@@ -73,7 +73,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	public Object[] toArray() {
 		// TODO Auto-generated method stub
 		Object[] objects = new Object[size()];
-		Iterator<E> it = iterator();
+		MIterator<E> it = iterator();
 		for (int i = 0; i < objects.length; i++) {
 			if (!it.hasNext()) {
 				return Arrays.copyOf(objects, i); // 压缩数组大小
@@ -92,7 +92,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 		// TODO Auto-generated method stub
 		int size=size();
 		T[] r=a.length>size?a:(T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
-		Iterator<E> it=iterator();
+		MIterator<E> it=iterator();
 		for(int i=0;i<size;i++){
 			if(!it.hasNext()){
 				if(a!=r){
@@ -123,7 +123,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	 * @param it
 	 * @return
 	 */
-	private static <T> T[] finishToArray(T[] r, Iterator<?> it) {
+	private static <T> T[] finishToArray(T[] r, MIterator<?> it) {
 		int i = r.length;
 		while (it.hasNext()) {
 			int cap = r.length;
@@ -156,7 +156,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 
 	@Override
 	public  boolean remove(E e) {
-		Iterator<E> it=iterator();
+		MIterator<E> it=iterator();
 		if(e==null){
 			while(it.hasNext()){
 				if(it.next()==null){
@@ -202,7 +202,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	@Override
 	public boolean removeAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
-		Iterator<E> it=iterator();
+		MIterator<E> it=iterator();
 		boolean modified=false;
 		while(it.hasNext()){
 			if(c.contains(it.next())){
@@ -220,7 +220,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	 */
 	public boolean retainAll(MCollection<?> c) {
 		// TODO Auto-generated method stub
-		Iterator<E> it=iterator();
+		MIterator<E> it=iterator();
 		boolean modified=false;
 		while(it.hasNext()){
 			if(!c.contains(it.next())){
@@ -237,7 +237,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	 * remove跟在next之后 否则有可能报异常。
 	 */
 	public void clear() {
-		Iterator<E> it=iterator();
+		MIterator<E> it=iterator();
 		while(it.hasNext()){
 			it.next();
 			it.remove();
@@ -247,7 +247,7 @@ public abstract class MAbstractCollection<E> implements MCollection<E> {
 	
 	@Override
 	public String toString(){
-		  Iterator<E> it = iterator();
+		  MIterator<E> it = iterator();
 	        if (! it.hasNext())
 	            return "[]";
 

@@ -79,7 +79,7 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	
 	@Override
 	public int indexOf(Object o){
-		ListIterator<E> it=listIterator();
+		MListIterator<E> it=listIterator();
 		if(o==null){
 			while(it.hasNext()){
 				if(it.next()==null){
@@ -99,7 +99,7 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	@Override
 	public int lastIndexOf(Object o){
 		
-		ListIterator<E> it=listIterator();
+		MListIterator<E> it=listIterator();
 		if(o==null){
 			while(it.hasPrevious()){
 				if(it.previous()==null){
@@ -142,7 +142,7 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	 * 可以参考父类的解释
 	 */
 	@Override
-	public Iterator<E> iterator(){
+	public MIterator<E> iterator(){
 		return new Itr();
 		
 	}
@@ -151,12 +151,12 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	 * 获取一个从0开始的遍历子，该遍历子是list特有的，可以改变遍历方向
 	 */
 	@Override
-	public ListIterator<E> listIterator(){
+	public MListIterator<E> listIterator(){
 		return listIterator(0);
 	}
 	
 	@Override
-	public ListIterator<E> listIterator(int index){
+	public MListIterator<E> listIterator(int index){
 		rangeCheckForAdd(index);
 		return new ListItr(index);
 	}
@@ -185,7 +185,7 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	 * 调用remove 不然就是非法操作.同理可知lastRet保存的是最后一次调用next后保留的那个位置
 	 * modcount是用于判断当前集合是否发生了结构性的变化，如果产生了变化那就会抛出不同步异常
 	 */
-	private class Itr implements Iterator<E>{
+	private class Itr implements MIterator<E>{
 		int cursor=0;
 		int lastRet=-1;
 		int expectedModCount=modCount;
@@ -242,7 +242,7 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	}
 	
 	
-	private class ListItr extends Itr implements ListIterator<E>{
+	private class ListItr extends Itr implements MListIterator<E>{
 
 		
 		public ListItr(int index){
@@ -331,7 +331,7 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 	 * @param toIndex
 	 */
 	protected void removeRange(int fromIndex,int toIndex){
-		ListIterator<E> it=listIterator(fromIndex);
+		MListIterator<E> it=listIterator(fromIndex);
 		int len=toIndex-fromIndex;
 		for(int i=0;i<len;i++){   //remove一定要在next之后调用
 			it.next();
@@ -369,8 +369,8 @@ public abstract class MAbstractList<E> extends MAbstractCollection<E> implements
 		if(!(o instanceof MList)){
 			return false;
 		}
-		ListIterator<E> e1=listIterator();
-		ListIterator e2=((MList)o).listIterator();
+		MListIterator<E> e1=listIterator();
+		MListIterator e2=((MList)o).listIterator();
 		while(e1.hasNext()&&e2.hasNext()){
 			E o1=e1.next();
 			Object o2=e2.next();
@@ -481,18 +481,18 @@ class SubList<E> extends MAbstractList<E>{
 	}
 	
 	@Override
-	public Iterator<E> iterator(){
+	public MIterator<E> iterator(){
 		return listIterator();
 	}
 	
 	
 	@Override
-	public ListIterator<E> listIterator(final int index) {
+	public MListIterator<E> listIterator(final int index) {
 		// TODO Auto-generated method stub
 		checkForComodification();
 		rangeCheckForAdd(index);
-		return new ListIterator<E>() {
-			private final ListIterator<E> i=l.listIterator(index+offset);
+		return new MListIterator<E>() {
+			private final MListIterator<E> i=l.listIterator(index+offset);
 			@Override
 			public boolean hasNext() {
 				// TODO Auto-generated method stub

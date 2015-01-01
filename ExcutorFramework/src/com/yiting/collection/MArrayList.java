@@ -401,13 +401,13 @@ public class MArrayList<E> extends MAbstractList<E> implements MRandomAccess,
 	}
 
 	@Override
-	public ListIterator<E> listIterator() {
+	public MListIterator<E> listIterator() {
 		// TODO Auto-generated method stub
 		return listIterator(0);
 	}
 
 	@Override
-	public ListIterator<E> listIterator(int index) {
+	public MListIterator<E> listIterator(int index) {
 		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException("index: " + index);
 		}
@@ -430,7 +430,7 @@ public class MArrayList<E> extends MAbstractList<E> implements MRandomAccess,
 		return "Index :" + index + ", size :" + size;
 	}
 
-	private class Itr implements Iterator<E> {
+	private class Itr implements MIterator<E> {
 		int cursor;
 		int lastRet = -1;
 		int expectedModCount = modCount;
@@ -480,7 +480,7 @@ public class MArrayList<E> extends MAbstractList<E> implements MRandomAccess,
 
 	}
 
-	private class ListItr extends Itr implements ListIterator<E> {
+	private class ListItr extends Itr implements MListIterator<E> {
 
 		public ListItr(int index) {
 			super();
@@ -661,17 +661,17 @@ public class MArrayList<E> extends MAbstractList<E> implements MRandomAccess,
 		 * @return
 		 */
 		@Override
-		public Iterator<E> iterator() {
+		public MIterator<E> iterator() {
 			// TODO Auto-generated method stub
 			return listIterator();
 		}
 
 		@Override
-		public ListIterator<E> listIterator(final int index) {
+		public MListIterator<E> listIterator(final int index) {
 			checkForComodification();
 			rangeCheck(index);
 			final int offset = this.offset;
-			return new ListIterator<E>() {
+			return new MListIterator<E>() {
 				int cursor = index;
 				int lastRet = -1;
 				int expectedModCount = MArrayList.this.modCount;

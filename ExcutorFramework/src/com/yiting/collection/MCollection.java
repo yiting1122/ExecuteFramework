@@ -7,7 +7,7 @@
  */
 package com.yiting.collection;
 
-public interface MCollection<E> extends Iterable<E> {
+public interface MCollection<E> extends MIterable<E> {
 	
 	
 	/**
@@ -47,7 +47,7 @@ public interface MCollection<E> extends Iterable<E> {
 	 * 如果说在有开发平台的情况下是可以自动生成，但是假如在没有开发平台下 一个个去查询那是相当繁琐的
 	 */
 	
-	public Iterator<E> iterator();
+	public MIterator<E> iterator();
 	
 	
 	

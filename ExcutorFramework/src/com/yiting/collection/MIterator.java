@@ -7,7 +7,7 @@ package com.yiting.collection;
  *Iterator 是一个遍历对象，通过这个遍历对象可以对collection 对象进行遍历
  * @param <E> E代表集合中保存的数据类型
  */
-public interface Iterator<E> extends java.util.Iterator<E>{
+public interface MIterator<E> extends java.util.Iterator<E>{
 	/**
 	 * 
 	 * hasNext用来判断是否有element，如果没有返回false

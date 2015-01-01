@@ -448,8 +448,7 @@ public class MArrayBlockingQueue<E> extends MAbstractQueue<E> implements
 
 	@Override
 	public MIterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Itr();
 	}
 
 	public String toString() {

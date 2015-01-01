@@ -6,7 +6,7 @@ import java.util.*;
  * 这个类提供了一些主要的实现
  * 通常增加的方法也会被重载
  */
-public class MAbstractQueue<E> extends MAbstractCollection<E> implements MQueue<E>{
+public abstract class MAbstractQueue<E> extends MAbstractCollection<E> implements MQueue<E>{
 
 	/**
 	 * 使用子类构造函数
@@ -35,8 +35,12 @@ public class MAbstractQueue<E> extends MAbstractCollection<E> implements MQueue<
 	 */
 	@Override
 	public E remove() {
-		// TODO Auto-generated method stub
-		return null;
+		E x=poll();
+		if(x!=null){
+			return x;
+		}else {
+			throw new NoSuchElementException();
+		}
 	}
 
 
@@ -47,7 +51,6 @@ public class MAbstractQueue<E> extends MAbstractCollection<E> implements MQueue<
 	 */
 	@Override
 	public E element() {
-		// TODO Auto-generated method stub
 		E x = peek();
 		if(x != null)
 			return x;
@@ -82,35 +85,5 @@ public class MAbstractQueue<E> extends MAbstractCollection<E> implements MQueue<
 			
 	}
 	
-	@Override
-	public boolean offer(E e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	
-	@Override
-	public E poll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public E peek() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }
